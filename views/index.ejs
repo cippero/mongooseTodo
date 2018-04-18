@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Books App</title>
+  <title>Todo App</title>
 
   <!-- STYLESHEETS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -19,21 +19,21 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="text-center">Books App</h1>
+    <h1 class="text-center">Todo App</h1>
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <form class="form-inline" id="newBookForm">
+        <form class="form-inline" id="newTodoForm">
           <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" name="title" placeholder="Book title">
+            <label for="title">Task</label>
+            <input type="text" class="form-control" name="task" placeholder="Book title">
           </div>
           <div class="form-group">
-            <label for="title">Author</label>
-            <input type="text" class="form-control" name="author" placeholder="Book author">
+            <label for="title">Description</label>
+            <input type="text" class="form-control" name="description" placeholder="Book author">
           </div>
-          <button type="submit" class="btn btn-default">Create book</button>
+          <button type="submit" class="btn btn-default">Create task</button>
         </form>
-        <div id='bookTarget'>
+        <div id='todoTarget'>
         </div>
       </div>
     </div>

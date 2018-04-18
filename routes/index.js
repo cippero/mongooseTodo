@@ -1,34 +1,65 @@
 const express    = require('express');
 const indexRoute = express.Router();
-// const mongoose   = require('mongoose');
 const db         = require('../models');
 
 indexRoute.get('/', function(req, res) {
-  res.render('../views/index', {title: "Todo List"});
+  res.render('../views/index');
 });
 
 // get api list of todos
 indexRoute.get('/api/todo', function (req, res) {
-  // send all books as JSON response
-  db.Todo.find(function(err, todo){
+  // send all todos as JSON response
+  db.Todo.find(function(err, todos){
     if (err) {
       console.log("index error: " + err);
       res.sendStatus(500);
     }
-    res.json(todo);
+    res.json(todos);
   });
 });
 
-// // create new todo
-// app.post('/api/todo', function (req, res) {
-//   // create new todo with form data (`req.body`)
-//   var newTodo = new Todo(req.body);
 
-//   // save new todo in db
-//   newTodo.save(function (err, savedTodo) {
-//     res.json(savedTodo);
-//   });
+indexRoute.get('/api/todo/:id', function (req, res) {
+  // find one movie by its id
+  db.Todo.find(function(err, todos){
+    if (err) {
+      console.log("index error: " + err);
+      res.sendStatus(500);
+    }
+    // find one movie by its id
+    console.log('todo #' + req.params);
+    res.json(todos[req.params.id-1]);
+  });
+  // Todo.findOne({ _id: todoId }, function (err, foundTodo) {
+  //   res.json(foundTodo);
+  // });
+});
+
+
+// // post new todo
+// indexRoute.post('/api/todo', function (req, res) {
+//   let newTask = db.Todo({task: req.body.task, description: req.body.description});
+//   newTask.save();
+//   res.json(newTask);
 // });
+
+// create new todo or update existing
+indexRoute.post('/api/todo', function (req, res) {
+  let newTask = req.body;
+  db.Todo.findOneAndUpdate({ $or: [ {task: newTask.task}, {description: newTask.description} ]}, newTask, {upsert: true}, function(err, todos) {
+    res.json(todos);
+    //res.redirect("/");
+  });
+
+});
+
+
+// delete todo
+indexRoute.delete('/api/todo/:id', function (req, res) {
+  db.Todo.findOneAndRemove({_id: req.params.id}, function(err, todos) {
+    res.json(todos);
+  });
+});
 
 
 indexRoute.get('*', function(req, res) {

@@ -48,9 +48,7 @@ indexRoute.post('/api/todo', function (req, res) {
   let newTask = req.body;
   db.Todo.findOneAndUpdate({ $or: [ {task: newTask.task}, {description: newTask.description} ]}, newTask, {upsert: true}, function(err, todos) {
     res.json(todos);
-    //res.redirect("/");
   });
-
 });
 
 
